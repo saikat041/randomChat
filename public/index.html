@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<script src = "/socket.io/socket.io.js"></script>
+<script src="index.js"></script>
+<body>
+
+
+<input type="text" placeholder="nick name" id="userName">
+<Button type="button" onclick="startChat()">Start Chat</Button>
+
+<div>
+Partner : <span id="partnerUserName"></span>
+</div>
+
+
+<div id="messages">
+
+</div>
+
+<br>
+
+<input type="text" placeholder="type your message" id="message">
+
+<Button type="button" onclick="sendMessage()">Send</Button>
+
+</body>
+
+
+</html>
