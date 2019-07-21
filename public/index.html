@@ -5,33 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
 </head>
 <script src = "/socket.io/socket.io.js"></script>
 <script src="index.js"></script>
+
 <body>
 
+<div class="container">
 
-<input type="text" placeholder="nick name" id="userName">
-<Button type="button" onclick="startChat()">Start Chat</Button>
+    <div class="row justify-content-center">
 
-<div>
-Partner : <span id="partnerUserName"></span>
+        <div class="col-6">
+                <input type="text" class = "form-control" placeholder="nick name" id="userName">
+                <Button type="button" class="btn btn-primary horizontal-center" id = "startChatButton" onclick="startChat()">Start Chat</Button>
+        </div>
+
+    </div>
+
+
+   
+    <div id="chatBox" class="box-shadow no-margin position-relative">
+
+        <div class="alert alert-primary center" style="margin-bottom: 5px" id="partnerUserName">
+                Press start button to start chatting
+        </div>
+
+        <div id = "chats">
+
+        </div>
+
+        <div class="row no-margin full-width" style="position: absolute; bottom:0px;">
+
+                        <div class="col-12 no-padding">
+                                <input type="text" class="form-control" placeholder="type your message" id="messageBox" onkeypress = "keyPressed(event)" disabled>
+                        </div>
+                
+                        <!-- <div class="col-1 no-padding">
+                                <Button type="button" class="btn btn-primary full-width" id ="sendButton" onclick="sendMessage()" disabled>Send</Button>
+                        </div> -->
+                
+        </div>
+
+    </div>
+
+
+    
+
 </div>
-
-
-<div id="messages">
-
-</div>
-
-<br>
-
-<input type="text" placeholder="type your message" id="message">
-
-<Button type="button" onclick="sendMessage()">Send</Button>
 
 </body>
-
 
 </html>
