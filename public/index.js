@@ -7,10 +7,16 @@ var partnerUserName;
 // This function is called when startChet button is clicked.
 function startChat(){
 
+    // If one socket is already available.
+    if(socket) {
+        socket.disconnect();
+    }
+
+    // New socket instance
     socket = io();
 
+    // Sending userName to server
     userName = document.getElementById('userName').value;
-
     socket.emit('userName',userName);
 
     // disable nick name input box and start chat button so that user can't send multiple chat request.
@@ -18,6 +24,8 @@ function startChat(){
     document.getElementById("userName").disabled = true;
     document.getElementById("startChatButton").disabled = true;
 
+    // Updating alertBox
+    document.getElementById("alertBox").innerText = "Finding partner....";
 
     // On receiving partner details from server.
     socket.on('partnerDetails', (data)=>{
@@ -31,7 +39,10 @@ function startChat(){
         document.getElementById("messageBox").disabled = false;
 
         // Updating partner name in UI.
-        document.getElementById('partnerUserName').innerText = "You are connected to : " + data.userName;
+        document.getElementById('alertBox').innerText = "You are connected to : " + data.userName;
+
+        // Clearing old chat bubbles
+        document.getElementById("chats").innerHTML = '';
     });
 
     // On receiving new message we add a message bubble to chat box.
@@ -39,20 +50,21 @@ function startChat(){
         addNewLineOnMessageBox(data, 'received');
     });
 
-    // When partner leaves an alert is shown.
+    // When partner leaves we update message in alertBox and disabling the messagebox.
     socket.on('partnerLeft', (data) => {
-
-        partnerUserName = '';
-        document.getElementById('partnerUserName').innerText = partnerUserName;
-        alert("Partner Left");
+        document.getElementById('alertBox').innerText = "Your Partner Left!!. Press start button to start chatting.";
+        document.getElementById("messageBox").disabled = true;
+        socket.disconnect();
+        delete socket;
     });
-
 }
 
-function keyPressed(evenet) {
+
+// When any key is pressed inside message box. 
+function keyPressed(event) {
 
     // When enter key is pressed.
-    if(evenet.keyCode == 13){
+    if(event.keyCode == 13){
         sendMessage();
     }
 }
@@ -64,7 +76,6 @@ function sendMessage(){
     socket.emit('message', messageBox.value);
     addNewLineOnMessageBox(messageBox.value, 'sent');
     messageBox.value = '';
-
 }
 
 
@@ -80,6 +91,7 @@ function addNewLineOnMessageBox(line,type) {
     }else{
         messageBubble.className = messageBubble.className + ' ' + 'float-left';
     }
+
     messageBubble.innerHTML = line;
     var ele = document.getElementById('chats');
     ele.appendChild(messageBubble);
