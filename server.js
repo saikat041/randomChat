@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 
 // Constants
 const PAIRING_INTERVAL = 2000;  //Time interval for pair making
-const PORT = 3000;              //Port at which server listens
+const PORT = process.env.PORT || 8000;              //Port at which server listens
 
 // Global variables
 var unpaired_sockets_map = {}; //{socket_id : socket} of unpaired users
